@@ -9,8 +9,12 @@
 import UIKit
 
 class RegisterTopView: UIView {
+    var dataArray:[String:Int]
+    var axisLineWidth:CGFloat!
+    var axisLineColor:UIColor!
     
     override func drawRect(rect: CGRect) {
+
     }
 }
 

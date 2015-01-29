@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>FBEC4D5E-190D-44D1-968C-EF5ED2F28719</string>
+	<key>IDESourceControlProjectName</key>
+	<string>Grahph</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>8F34CA5E478AF1ABCEF3B12ABE9E1557F90364AF</key>
+		<string>https://github.com/JacksonXie/Grahph.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>Grahph.xcodeproj</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>8F34CA5E478AF1ABCEF3B12ABE9E1557F90364AF</key>
+		<string>../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/JacksonXie/Grahph.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>8F34CA5E478AF1ABCEF3B12ABE9E1557F90364AF</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>8F34CA5E478AF1ABCEF3B12ABE9E1557F90364AF</string>
+			<key>IDESourceControlWCCName</key>
+			<string>Grahph</string>
+		</dict>
+	</array>
+</dict>
+</plist>
