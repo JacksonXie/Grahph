@@ -9,10 +9,12 @@
 import UIKit
 
 class ViewController: UIViewController {
-
+    var graphView:GraphView!
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        graphView.frame = CGRectMake(100,100,200,100)
+        view.addSubview(graphView)
+        
     }
 
     override func didReceiveMemoryWarning() {
