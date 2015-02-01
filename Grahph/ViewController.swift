@@ -12,9 +12,17 @@ class ViewController: UIViewController {
     var graphView:GraphView!
     override func viewDidLoad() {
         super.viewDidLoad()
-        graphView = GraphView()
+        let myData = [
+            ["label" : "Mon",   "value" : NSNumber(int:15)],
+            ["label" : "Tues",  "value" : NSNumber(int:30)],
+            ["label" : "Weds",  "value" : NSNumber(int:7)],
+            ["label" : "Thurs", "value" : NSNumber(int:60)],
+            ["label" : "Fri",   "value" : NSNumber(int:30)],
+            ["label" : "Sat",   "value" : NSNumber(int:15)],
+            ["label" : "Sun",   "value" : NSNumber(int:45)],
+            ]()
+        graphView = GraphView(frame:CGRectMake(20,200,300,200),data:myData)
         graphView.backgroundColor = UIColor.blueColor()
-        graphView.frame = CGRectMake(20,200,300,200)
         graphView.axisBackgroundColor = UIColor.whiteColor()
         view.addSubview(graphView)
         

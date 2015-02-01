@@ -9,19 +9,34 @@
 import UIKit
 
 class GraphView: UIView {
+    //Data 
+    private var data = NSMutableArray()
+    private var dataCount:Int!
     //Context
     private var context:CGContextRef?
     //Graph Size
-    private var graphWidth:CGFloat!
-    private var graphHeight:CGFloat!
+    private var graphWidth:CGFloat = 0
+    private var graphHeight:CGFloat = 0
     private var paddingTop:CGFloat = 30.0
     private var paddingLeft:CGFloat = 40.0
-    private var axisWidth:CGFloat!
-    private var axisHeight:CGFloat!
+    private var axisWidth:CGFloat = 0
+    private var axisHeight:CGFloat = 0
     //Graph Style
     var axisBackgroundColor:UIColor!
+    var lowPoint:Int = 0
+    var highPoint:Int = 0
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+    }
+    init(frame:CGRect,data:NSArray){
+        super.init(frame:frame)
+        backgroundColor = UIColor.whiteColor()
+        self.data = data.mutableCopy() as NSMutableArray
+    }
     override func drawRect(rect: CGRect) {
         super.drawRect(rect)
+        //var dataArray:[String:String] = ["21":"Mon","32":"Tue","45":"Wed","76":"Thur","32":"Fri"]
         //Context
         context = UIGraphicsGetCurrentContext()
         // Graph Size
@@ -38,6 +53,26 @@ class GraphView: UIView {
         CGContextAddPath(context,axisPath)
         CGContextSetStrokeColorWithColor(context,axisBackgroundColor.CGColor)
         CGContextStrokePath(context)
+        
+        // Draw X axis
+        dataCount = data.count
+        lowPoint = getLowPoint(data)
     }
+    required init(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    // Define Y axis lowest point and highest point
+    func getLowPoint(NSArray)->Int{
+        
+        var minNumber:Int = 0
+        for index in 0...self.dataCount - 1{
+            if(minNumber > data[index].objectForKey("value")?.integerValue){
+                 println("TEST")
+            }
+        }
+        return minNumber
+    }
+  /*  func getHighPoint(NSArray)->Int{
+    }*/
 }
 
