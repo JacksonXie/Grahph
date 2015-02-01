@@ -20,7 +20,7 @@ class ViewController: UIViewController {
             ["label" : "Fri",   "value" : NSNumber(int:30)],
             ["label" : "Sat",   "value" : NSNumber(int:15)],
             ["label" : "Sun",   "value" : NSNumber(int:45)],
-            ]()
+            ] as NSArray
         graphView = GraphView(frame:CGRectMake(20,200,300,200),data:myData)
         graphView.backgroundColor = UIColor.blueColor()
         graphView.axisBackgroundColor = UIColor.whiteColor()

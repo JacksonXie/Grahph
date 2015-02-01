@@ -21,10 +21,13 @@ class GraphView: UIView {
     private var paddingLeft:CGFloat = 40.0
     private var axisWidth:CGFloat = 0
     private var axisHeight:CGFloat = 0
+    private var paddingY:CGFloat = 0
     //Graph Style
     var axisBackgroundColor:UIColor!
     var lowPoint:Int = 0
     var highPoint:Int = 0
+    var labelFont = UIFont.systemFontOfSize(12)
+    var labelColor = UIColor.blackColor()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -36,7 +39,6 @@ class GraphView: UIView {
     }
     override func drawRect(rect: CGRect) {
         super.drawRect(rect)
-        //var dataArray:[String:String] = ["21":"Mon","32":"Tue","45":"Wed","76":"Thur","32":"Fri"]
         //Context
         context = UIGraphicsGetCurrentContext()
         // Graph Size
@@ -54,25 +56,46 @@ class GraphView: UIView {
         CGContextSetStrokeColorWithColor(context,axisBackgroundColor.CGColor)
         CGContextStrokePath(context)
         
-        // Draw X axis
+        // Draw Y axis
         dataCount = data.count
         lowPoint = getLowPoint(data)
+        highPoint = getHighPoint(data)
+        paddingY = CGFloat((highPoint - lowPoint)%(dataCount+1))
     }
     required init(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     // Define Y axis lowest point and highest point
     func getLowPoint(NSArray)->Int{
-        
-        var minNumber:Int = 0
-        for index in 0...self.dataCount - 1{
-            if(minNumber > data[index].objectForKey("value")?.integerValue){
-                 println("TEST")
+        var minNumber:Int = (data[0].objectForKey("value") as NSNumber).integerValue
+        for index in 1...self.dataCount - 1{
+            if(minNumber > (data[index].objectForKey("value") as NSNumber).integerValue){
+               minNumber  = (data[index].objectForKey("value") as NSNumber).integerValue
             }
+        }
+        if(minNumber-10>=0){
+            minNumber = minNumber - 10
         }
         return minNumber
     }
-  /*  func getHighPoint(NSArray)->Int{
-    }*/
+    func getHighPoint(NSArray)->Int{
+        var maxNumber:Int = (data[0].objectForKey("value") as NSNumber).integerValue
+        for index in 1...self.dataCount - 1{
+            if(maxNumber < (data[index].objectForKey("value") as NSNumber).integerValue){
+                maxNumber  = (data[index].objectForKey("value") as NSNumber).integerValue
+            }
+        }
+        return maxNumber+10
+    }
+    //axis Label 
+    func axisLabel(title:NSString)->UILabel{
+        var label = UILabel(frame: CGRectZero)
+        label.text = title
+        label.font = labelFont
+        label.textColor = labelColor
+        label.backgroundColor = backgroundColor
+        label.textAlignment = NSTextAlignment.Center
+        return label
+    }
 }
 
