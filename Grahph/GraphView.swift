@@ -18,12 +18,8 @@ class GraphView: UIView {
     private var paddingLeft:CGFloat = 40.0
     private var axisWidth:CGFloat!
     private var axisHeight:CGFloat!
-    
-    
-    
-    required init(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+    //Graph Style
+    var axisBackgroundColor:UIColor!
     override func drawRect(rect: CGRect) {
         super.drawRect(rect)
         //Context
@@ -31,15 +27,16 @@ class GraphView: UIView {
         // Graph Size
         graphWidth = rect.size.width - paddingTop
         graphHeight = rect.size.height - paddingLeft
-        axisWidth = rect.size.width
-        axisHeight = rect.size.height
+        axisWidth = rect.size.width - 31.0
+        axisHeight = rect.size.height - 31.0
         
         //Draw graph axis
         let axisPath = CGPathCreateMutable()
-        CGPathMoveToPoint(axisPath, nil, paddingLeft, 0)
-        CGPathAddLineToPoint(axisPath,nil, 20, 0)
+        CGPathMoveToPoint(axisPath, nil, paddingLeft,31.0)
+        CGPathAddLineToPoint(axisPath,nil,paddingLeft,rect.size.height - 31.0)
+        CGPathAddLineToPoint(axisPath,nil,axisWidth, rect.size.height - 31.0)
         CGContextAddPath(context,axisPath)
-        CGContextSetStrokeColorWithColor(context,UIColor.blackColor().CGColor)
+        CGContextSetStrokeColorWithColor(context,axisBackgroundColor.CGColor)
         CGContextStrokePath(context)
     }
 }

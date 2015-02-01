@@ -12,7 +12,10 @@ class ViewController: UIViewController {
     var graphView:GraphView!
     override func viewDidLoad() {
         super.viewDidLoad()
-        graphView.frame = CGRectMake(100,100,200,100)
+        graphView = GraphView()
+        graphView.backgroundColor = UIColor.blueColor()
+        graphView.frame = CGRectMake(20,200,300,200)
+        graphView.axisBackgroundColor = UIColor.whiteColor()
         view.addSubview(graphView)
         
     }
