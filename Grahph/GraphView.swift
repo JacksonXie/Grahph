@@ -11,24 +11,26 @@ import UIKit
 class GraphView: UIView {
     //Data 
     private var data = NSMutableArray()
-    private var dataCount:Int!
-    //Context
+    //Context Layout
     private var context:CGContextRef?
     //Graph Size
     private var graphWidth:CGFloat = 0
     private var graphHeight:CGFloat = 0
     private var paddingTop:CGFloat = 30.0
-    private var paddingLeft:CGFloat = 40.0
-    private var axisWidth:CGFloat = 0
-    private var axisHeight:CGFloat = 0
-    private var paddingY:CGFloat = 0
     //Graph Style
     var axisBackgroundColor:UIColor!
     var lowPoint:Int = 0
     var highPoint:Int = 0
     var labelFont = UIFont.systemFontOfSize(12)
-    var labelColor = UIColor.blackColor()
-    
+    var labelColor = UIColor.whiteColor()
+    private var labelMargetTop:CGFloat = 15.0
+    //Layout
+    var marginLeftAndRight:CGFloat = 0
+    //Axis Style
+    var axisLineColor:UIColor!
+    //Trigger Line
+    var TriggerLineWidth:CGFloat = 0
+    var TriggerLineHeight:CGFloat = 0
     override init(frame: CGRect) {
         super.init(frame: frame)
     }
@@ -37,65 +39,68 @@ class GraphView: UIView {
         backgroundColor = UIColor.whiteColor()
         self.data = data.mutableCopy() as NSMutableArray
     }
-    override func drawRect(rect: CGRect) {
-        super.drawRect(rect)
-        //Context
-        context = UIGraphicsGetCurrentContext()
-        // Graph Size
-        graphWidth = rect.size.width - paddingTop
-        graphHeight = rect.size.height - paddingLeft
-        axisWidth = rect.size.width - 31.0
-        axisHeight = rect.size.height - 31.0
-        
-        //Draw graph axis
-        let axisPath = CGPathCreateMutable()
-        CGPathMoveToPoint(axisPath, nil, paddingLeft,31.0)
-        CGPathAddLineToPoint(axisPath,nil,paddingLeft,rect.size.height - 31.0)
-        CGPathAddLineToPoint(axisPath,nil,axisWidth, rect.size.height - 31.0)
-        CGContextAddPath(context,axisPath)
-        CGContextSetStrokeColorWithColor(context,axisBackgroundColor.CGColor)
-        CGContextStrokePath(context)
-        
-        // Draw Y axis
-        dataCount = data.count
-        lowPoint = getLowPoint(data)
-        highPoint = getHighPoint(data)
-        paddingY = CGFloat((highPoint - lowPoint)%(dataCount+1))
-    }
+
     required init(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    // Define Y axis lowest point and highest point
-    func getLowPoint(NSArray)->Int{
-        var minNumber:Int = (data[0].objectForKey("value") as NSNumber).integerValue
-        for index in 1...self.dataCount - 1{
-            if(minNumber > (data[index].objectForKey("value") as NSNumber).integerValue){
-               minNumber  = (data[index].objectForKey("value") as NSNumber).integerValue
-            }
+    override func drawRect(rect: CGRect) {
+        super.drawRect(rect)
+        var context:CGContextRef
+        drawBackground(rect)
+        for i in 0...data.count-1{
+            drawTriggerLine(rect,index:i)
         }
-        if(minNumber-10>=0){
-            minNumber = minNumber - 10
-        }
-        return minNumber
     }
-    func getHighPoint(NSArray)->Int{
-        var maxNumber:Int = (data[0].objectForKey("value") as NSNumber).integerValue
-        for index in 1...self.dataCount - 1{
-            if(maxNumber < (data[index].objectForKey("value") as NSNumber).integerValue){
-                maxNumber  = (data[index].objectForKey("value") as NSNumber).integerValue
-            }
-        }
-        return maxNumber+10
+    //The function draw the background
+    func drawBackground(rect:CGRect){
+        // Graph Size
+        context = UIGraphicsGetCurrentContext()
+        graphWidth = rect.size.width - paddingTop
+        graphHeight = rect.size.height - marginLeftAndRight
+        // Axis line
+        drawAxis(rect,lineColor:axisLineColor.CGColor)
+        // Axis Label
+        let xLabel = drawLabel("0")
+        xLabel.frame = CGRectMake(marginLeftAndRight, graphHeight+labelMargetTop, 10, 10)
+        addSubview(xLabel)
+        
     }
-    //axis Label 
-    func axisLabel(title:NSString)->UILabel{
-        var label = UILabel(frame: CGRectZero)
+    //Drawing Triggr Line
+    func drawTriggerLine(rect:CGRect,index:Int){
+        let triggerLine = CGPathCreateMutable()
+        CGPathMoveToPoint(triggerLine,nil,marginLeftAndRight+CGFloat(index*20),graphHeight-20.0)
+        CGPathAddLineToPoint(triggerLine,nil,marginLeftAndRight+CGFloat(index*20), graphHeight)
+        CGContextAddPath(context, triggerLine)
+        CGContextSetStrokeColorWithColor(context,UIColor.redColor().CGColor)
+        CGContextStrokePath(context)
+    }
+    func drawAxis(rect:CGRect,lineColor:CGColorRef){
+        context = UIGraphicsGetCurrentContext()
+        let axisPath = CGPathCreateMutable()
+        CGPathMoveToPoint(axisPath,nil, marginLeftAndRight,graphHeight)
+        CGPathAddLineToPoint(axisPath,nil,graphWidth, graphHeight)
+        CGContextAddPath(context, axisPath)
+        CGContextSetStrokeColorWithColor(context,lineColor)
+        CGContextStrokePath(context)
+    }
+    func drawLabel(title:NSString)->UILabel{
+        let label = UILabel(frame: CGRectZero)
         label.text = title
         label.font = labelFont
         label.textColor = labelColor
-        label.backgroundColor = backgroundColor
         label.textAlignment = NSTextAlignment.Center
+        label.sizeToFit()
         return label
     }
+    // locate the trigger on timeline
+    // return Int to describe the percentage
+    func locatetheTrigger(index:Int)->Int{
+        var percentage:Int = 0
+        var timePoint:Int = 0
+        timePoint = (data[index].objectForKey("value") as NSNumber).integerValue
+        percentage = timePoint % 24
+        return percentage
+    }
 }
+
 

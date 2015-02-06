@@ -13,17 +13,19 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         let myData = [
-            ["label" : "Mon",   "value" : NSNumber(int:15)],
-            ["label" : "Tues",  "value" : NSNumber(int:30)],
-            ["label" : "Weds",  "value" : NSNumber(int:7)],
-            ["label" : "Thurs", "value" : NSNumber(int:60)],
-            ["label" : "Fri",   "value" : NSNumber(int:30)],
-            ["label" : "Sat",   "value" : NSNumber(int:15)],
-            ["label" : "Sun",   "value" : NSNumber(int:45)],
+            ["label" : "Mon",   "value" : 15],
+            ["label" : "Tues",  "value" : 30],
+            ["label" : "Weds",  "value" :7],
+            ["label" : "Thurs", "value" : 60],
+            ["label" : "Fri",   "value" : 30],
+            ["label" : "Sat",   "value" : 15],
+            ["label" : "Sun",   "value" : 45],
             ] as NSArray
-        graphView = GraphView(frame:CGRectMake(20,200,300,200),data:myData)
+        graphView = GraphView(frame:CGRectMake(0,0,view.bounds.width,view.bounds.height*0.3),data:myData)
         graphView.backgroundColor = UIColor.blueColor()
-        graphView.axisBackgroundColor = UIColor.whiteColor()
+        graphView.axisLineColor = UIColor.whiteColor()
+        //Layout Set
+        graphView.marginLeftAndRight = 40.0
         view.addSubview(graphView)
         
     }
