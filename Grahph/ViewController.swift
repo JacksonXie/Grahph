@@ -13,13 +13,13 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         let myData = [
-            ["label" : "Mon",   "value" : 15],
-            ["label" : "Tues",  "value" : 30],
-            ["label" : "Weds",  "value" :7],
-            ["label" : "Thurs", "value" : 60],
-            ["label" : "Fri",   "value" : 30],
-            ["label" : "Sat",   "value" : 15],
-            ["label" : "Sun",   "value" : 45],
+            ["label" : "Mon",   "value" : 234.0],
+            ["label" : "Tues",  "value" : 1000.0],
+            ["label" : "Weds",  "value" :712.0],
+            ["label" : "Thurs", "value" : 600.0],
+            ["label" : "Fri",   "value" : 0.0],
+            ["label" : "Sat",   "value" : 150.0],
+            ["label" : "Sun",   "value" : 450.0],
             ] as NSArray
         graphView = GraphView(frame:CGRectMake(0,0,view.bounds.width,view.bounds.height*0.3),data:myData)
         graphView.backgroundColor = UIColor.blueColor()

@@ -25,12 +25,13 @@ class GraphView: UIView {
     var labelColor = UIColor.whiteColor()
     private var labelMargetTop:CGFloat = 15.0
     //Layout
-    var marginLeftAndRight:CGFloat = 0
+    var marginLeftAndRight:CGFloat = 20
     //Axis Style
     var axisLineColor:UIColor!
     //Trigger Line
     var TriggerLineWidth:CGFloat = 0
     var TriggerLineHeight:CGFloat = 0
+    private var locationPercentage:Float = 0
     override init(frame: CGRect) {
         super.init(frame: frame)
     }
@@ -48,28 +49,36 @@ class GraphView: UIView {
         var context:CGContextRef
         drawBackground(rect)
         for i in 0...data.count-1{
-            drawTriggerLine(rect,index:i)
+            locationPercentage = (data[i].objectForKey("value") as Float)/1440.0
+            println(locationPercentage)
+            drawTriggerLine(rect,location:locationPercentage)
         }
     }
     //The function draw the background
     func drawBackground(rect:CGRect){
         // Graph Size
         context = UIGraphicsGetCurrentContext()
-        graphWidth = rect.size.width - paddingTop
-        graphHeight = rect.size.height - marginLeftAndRight
+        graphWidth = rect.size.width - marginLeftAndRight
+        graphHeight = rect.size.height - paddingTop
         // Axis line
         drawAxis(rect,lineColor:axisLineColor.CGColor)
         // Axis Label
-        let xLabel = drawLabel("0")
-        xLabel.frame = CGRectMake(marginLeftAndRight, graphHeight+labelMargetTop, 10, 10)
-        addSubview(xLabel)
-        
+        let zeroLabel = drawLabel("0:00")
+        zeroLabel.frame = CGRectMake(marginLeftAndRight, graphHeight+labelMargetTop, 50.0, 15.0)
+        addSubview(zeroLabel)
+        let tLabel = drawLabel("12:00")
+        // TO DO Padding
+        tLabel.frame = CGRectMake(marginLeftAndRight+100, graphHeight+labelMargetTop, 50.0, 15.0)
+        addSubview(tLabel)
+        let fLabel = drawLabel("23:59")
+        fLabel.frame = CGRectMake(marginLeftAndRight+200, graphHeight+labelMargetTop, 50.0, 15.0)
+        addSubview(fLabel)
     }
     //Drawing Triggr Line
-    func drawTriggerLine(rect:CGRect,index:Int){
+    func drawTriggerLine(rect:CGRect,location:Float){
         let triggerLine = CGPathCreateMutable()
-        CGPathMoveToPoint(triggerLine,nil,marginLeftAndRight+CGFloat(index*20),graphHeight-20.0)
-        CGPathAddLineToPoint(triggerLine,nil,marginLeftAndRight+CGFloat(index*20), graphHeight)
+        CGPathMoveToPoint(triggerLine,nil,rect.size.width * CGFloat(location)+marginLeftAndRight,graphHeight-20.0)
+        CGPathAddLineToPoint(triggerLine,nil,rect.size.width * CGFloat(location)+marginLeftAndRight, graphHeight)
         CGContextAddPath(context, triggerLine)
         CGContextSetStrokeColorWithColor(context,UIColor.redColor().CGColor)
         CGContextStrokePath(context)
